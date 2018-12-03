@@ -1,11 +1,13 @@
 # ScriptableEvents
 
-This is a event system made for Unity which has been based on a [Unite 2017 talk by Ryan Hipple](https://youtu.be/raQ3iHhE_Kk). 
-It's also heavily inspired by [NeoDragonPC's improved version on this talk's implementation](https://github.com/NeoDragonCP/Unity-ScriptableObjects-Game-Events-)
+**To use the `ScriptableEvents` you need to use the .NET 4.x Scripting Runtime Version**.  
+This can be changed in the Player settings. 
+This is a event system made for Unity which has been based on a [Unite 2017 talk by Ryan Hipple](https://youtu.be/raQ3iHhE_Kk). Code from the video can be found [here](https://github.com/roboryantron/Unite2017). 
+It's also heavily inspired by [NeoDragonPC's improved version on this talk's implementation](https://github.com/NeoDragonCP/Unity-ScriptableObjects-Game-Events-).
 The big difference here is that this implementation uses Generic Types, so a new Event can be created fairly easily.  
 Another difference is that you can chose which DataType you want to listen for, instead of having a single Listener which has 4 Response fields, which fills the entire screen.
 
-## Installation
+## Installation 
 To install this just download the source and copy the `ScriptableEvents` folder in Assets to your existing project. 
 
 ## Usage
@@ -15,17 +17,33 @@ For this example we'll go with `Integer Event`.
 Now create a GameObject and give it the `Integer Event Listener` script.  
 Now you can add a new `Response` by increasing the size and dropping the `Integer Event` in the Event field.  
 You can now add new methods that should be executed when the Event is raised.  
-Testing if the `Response` is executing the method can be done by going in Play mode, selecting the `Integer Event` and clicking Raise.  
+Testing if the `Response` is executing the method can be done by going in Play mode, selecting the `Integer Event` and clicking Raise.
 This will fire off the Event and should execute the method you have assigned to the `Response`.  
 You can also send some data with this event. This can be done by calling `IntegerEvent.Sent = {value}`. 
 This value can be used by creating a method which needs the specified datatype, in this case, an int.  
 If you create a method like this  
 ```csharp
-public class TestUI : MonoBehaviour {
+public class TestUI : MonoBehaviour 
+{
     public void Multiply(int amount) {}
 }
 ```
 And assign this method to the Listener, you can select a Dynamic int option. If this is selected the int that was send will be used as the parameter.
+
+To raise an event from code, you need to have a reference to it and call the `Raise()` method on any derived AbstractEvent.  
+Setting the value that should be sent with the Event can be set by calling `Event.Sent = {value}`.
+```csharp
+public class IntEventTester : MonoBehaviour 
+{
+    public IntegerEvent Event; // Reference to the event
+    
+    public void Start() 
+    {
+        Event.Sent = 123; // Setting the Sent value
+        Event.Raise(); // Raising the event
+    }
+}
+```
 
 ## Creating a new Scriptable Event
 I recommend you to check out the Example scene and look at the DamageStat events.  
