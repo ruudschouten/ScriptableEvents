@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using ScriptableEvents.Abstracts;
 using ScriptableEvents.Responses;
-using ScriptableEvents.Responses;
 
 namespace ScriptableEvents.Listeners
 {
